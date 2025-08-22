@@ -27,7 +27,11 @@ const artworkSchema = new mongoose.Schema(
     tags: [{ type: String, trim: true }],
 
     // Relations
-    artist: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    artist: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
 
     // Optional commerce-ish fields (you can ignore on frontend if not needed yet)
     isForSale: { type: Boolean, default: false },
@@ -41,6 +45,6 @@ const artworkSchema = new mongoose.Schema(
 );
 
 // Helpful for simple search
-artworkSchema.index({ title: "text", description: "text", tags: 1 });
+artworkSchema.index({ title: "text", description: "text", tags: "text" });
 
 module.exports = mongoose.model("Artwork", artworkSchema);
