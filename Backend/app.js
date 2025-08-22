@@ -17,9 +17,14 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json()); // To parse JSON requests
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", require("./routes/authRouter"));
+
+app.get("/", (req, res) => {
+  res.send("Home page");
+});
 
 // Start server
 const port = process.env.PORT || 3000;
