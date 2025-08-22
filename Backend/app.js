@@ -22,7 +22,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve u
 
 // Routes
 app.use("/api/auth", require("./routes/authRouter"));      // Auth routes (already existing)
-app.use("/api/artworks", require("./routes/artworkRoutes")); // ✅ Added Artwork routes
+app.use("/api/artworks", require("./routes/artworkRoutes")); // ✅ Added Artwork routes 
+app.use("/api/comments", require("./routes/commentRoutes"));
+
 
 app.get("/", (req, res) => {
   res.send("Home page");
