@@ -18,9 +18,11 @@ const app = express();
 app.use(cors());
 app.use(express.json()); // To parse JSON requests
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // Serve uploaded images
 
 // Routes
-app.use("/api/auth", require("./routes/authRouter"));
+app.use("/api/auth", require("./routes/authRouter"));      // Auth routes (already existing)
+app.use("/api/artworks", require("./routes/artworkRoutes")); // ✅ Added Artwork routes
 
 app.get("/", (req, res) => {
   res.send("Home page");
