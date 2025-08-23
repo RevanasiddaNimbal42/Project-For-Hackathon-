@@ -22,6 +22,7 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/auth", require("./routes/authRouter"));
 app.use("/api/artworks", require("./routes/artworkRoutes"));
 app.use("/api/comments", require("./routes/commentRoutes"));
+app.use("/api/profile", require("./routes/profileRoutes"));
 
 app.get("/", (req, res) => {
   res.send("Home page");

@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["artist", "viewer"], default: "viewer" },
+
+    bio: { type: String, default: "" },
+    profileImage: { type: String, default: "" },
   },
   { timestamps: true }
 );
@@ -22,4 +25,4 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);
