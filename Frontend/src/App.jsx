@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./pages/Home";
 import Artworks from "./pages/Artworks";
@@ -10,7 +10,22 @@ import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    !!localStorage.getItem("token")
+  );
+
+  // Listen for token changes in localStorage
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsAuthenticated(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener("storage", checkAuth);
+    checkAuth();
+
+    return () => window.removeEventListener("storage", checkAuth);
+  }, [location]);
 
   return (
     <>
@@ -25,8 +40,8 @@ function App() {
         />
 
         {/* Public routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login onAuth={() => setIsAuthenticated(true)} />} />
+        <Route path="/register" element={<Register onAuth={() => setIsAuthenticated(true)} />} />
 
         {/* Protected routes */}
         {isAuthenticated && (

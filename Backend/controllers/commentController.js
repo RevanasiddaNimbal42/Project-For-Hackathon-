@@ -1,4 +1,4 @@
-const Comment = require("../modules/");
+const Comment = require("../modules/Comment");
 const Artwork = require("../modules/Artwork");
 
 // @desc    Add comment to an artwork
