@@ -14,7 +14,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      t;
+      // Make login request
       const res = await axios.post("/auth/login", { email, password });
 
       if (res.data.token) {

@@ -8,12 +8,12 @@ const commentSchema = new mongoose.Schema(
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Reference to User
+      ref: "User",
       required: true,
     },
     artwork: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Artwork", // Reference to Artwork
+      ref: "Artwork",
       required: true,
     },
   },

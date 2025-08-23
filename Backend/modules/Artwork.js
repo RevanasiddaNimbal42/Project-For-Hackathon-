@@ -1,9 +1,5 @@
 const mongoose = require("mongoose");
 
-/**
- * Artwork Schema
- * Minimal fields required for MVP + a few useful extras for filtering.
- */
 const artworkSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },
@@ -33,18 +29,15 @@ const artworkSchema = new mongoose.Schema(
       required: true,
     },
 
-    // Optional commerce-ish fields (you can ignore on frontend if not needed yet)
     isForSale: { type: Boolean, default: false },
     price: { type: Number, min: 0 },
 
-    // Engagement
     likesCount: { type: Number, default: 0 },
     views: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
-// Helpful for simple search
 artworkSchema.index({ title: "text", description: "text", tags: "text" });
 
 module.exports = mongoose.model("Artwork", artworkSchema);

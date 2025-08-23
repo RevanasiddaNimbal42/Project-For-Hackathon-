@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "../api/api";
 
 const Comments = () => {
-  const { id } = useParams(); // artwork id
+  const { id } = useParams();
   const [comments, setComments] = useState([]);
   const [text, setText] = useState("");
 

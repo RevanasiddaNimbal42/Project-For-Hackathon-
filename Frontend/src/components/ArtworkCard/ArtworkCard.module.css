@@ -1,6 +1,6 @@
 .card {
   width: 200px;
-  border: 1px solid #ccc;
+  border: 1px solid #f1b24d;
   border-radius: 5px;
   padding: 10px;
   text-align: center;
@@ -13,4 +13,11 @@
 button {
   margin-top: 10px;
   padding: 5px 10px;
+  border-radius: 12px;
+  background-color: rgb(238, 230, 236);
+  cursor: pointer;
+}
+button:hover {
+  background-color: rgb(249, 105, 21);
+  transform: scale(1.05);
 }

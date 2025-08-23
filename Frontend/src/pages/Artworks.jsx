@@ -6,16 +6,17 @@ import ArtworkCard from "../components/ArtworkCard/ArtworkCard";
 const Artworks = () => {
   const [artworks, setArtworks] = useState([]);
   const [form, setForm] = useState({ title: "", description: "", image: null });
+  const [loading, setLoading] = useState(false);
   const location = useLocation();
   const query = new URLSearchParams(location.search).get("q");
 
-  // Fetch artworks
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
-        const res = await axios.get(`/artworks${query ? `?q=${query}` : ""}`);
-        console.log("API response:", res.data);
-        setArtworks(res.data.artworks || res.data.items || res.data);
+        const res = await axios.get(`/artworks${query ? `?q=${query}` : ""}`, {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        setArtworks(res.data.items || res.data.artworks || res.data);
       } catch (err) {
         console.error(
           "Error fetching artworks:",
@@ -26,7 +27,6 @@ const Artworks = () => {
     fetchArtworks();
   }, [query]);
 
-  // Handle input changes
   const handleChange = (e) => {
     if (e.target.name === "image") {
       setForm({ ...form, image: e.target.files[0] });
@@ -35,15 +35,20 @@ const Artworks = () => {
     }
   };
 
-  // Submit new artwork
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const data = new FormData();
-      data.append("title", form.title);
-      data.append("description", form.description);
-      if (form.image) data.append("image", form.image);
+    if (!form.title || !form.image) {
+      alert("Title and image are required!");
+      return;
+    }
 
+    const data = new FormData();
+    data.append("title", form.title);
+    data.append("description", form.description);
+    data.append("image", form.image);
+
+    setLoading(true);
+    try {
       await axios.post("/artworks", data, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -51,20 +56,24 @@ const Artworks = () => {
         },
       });
 
-      // Refresh artworks after upload
       const res = await axios.get("/artworks", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      setArtworks(res.data.items || res.data);
+      setArtworks(res.data.items || res.data.artworks || res.data);
       setForm({ title: "", description: "", image: null });
     } catch (err) {
-      console.error("Error uploading artwork:", err);
+      console.error(
+        "Error uploading artwork:",
+        err.response?.data || err.message
+      );
+      alert(err.response?.data?.message || "Failed to upload artwork");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div style={{ padding: "20px" }}>
-      {/* Upload Form */}
       <form
         onSubmit={handleSubmit}
         style={{
@@ -94,11 +103,13 @@ const Artworks = () => {
           name="image"
           accept="image/*"
           onChange={handleChange}
+          required
         />
-        <button type="submit">Upload Artwork</button>
+        <button type="submit" disabled={loading}>
+          {loading ? "Uploading..." : "Upload Artwork"}
+        </button>
       </form>
 
-      {/* Artwork List */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
         {artworks.length > 0 ? (
           artworks.map((art) => <ArtworkCard key={art._id} artwork={art} />)

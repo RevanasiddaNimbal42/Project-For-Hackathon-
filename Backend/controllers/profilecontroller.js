@@ -1,8 +1,5 @@
-const User = require("../modules/User");
+const User = require("../modules/user");
 
-// @desc    Get logged-in user profile
-// @route   GET /api/profile
-// @access  Private
 exports.getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).select("-password"); // remove password
@@ -17,9 +14,6 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// @desc    Update user profile
-// @route   PUT /api/profile
-// @access  Private
 exports.updateProfile = async (req, res) => {
   try {
     const { username, email, bio, profileImage } = req.body;

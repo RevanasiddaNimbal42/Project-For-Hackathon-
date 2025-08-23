@@ -3,10 +3,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #f5f5f5;
+  background-color: #f7f069;
 }
 .logo {
-  font-size: 24px;
+  font-size: 32px;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-weight: bold;
 }
 .searchForm input {

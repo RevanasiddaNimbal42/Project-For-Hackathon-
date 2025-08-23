@@ -17,7 +17,6 @@ const Home = () => {
 
         console.log("API response:", res.data);
 
-        // Adjust based on response structure
         setArtworks(res.data.artworks || res.data.items || res.data);
       } catch (err) {
         console.error(

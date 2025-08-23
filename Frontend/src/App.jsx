@@ -15,7 +15,6 @@ function App() {
     !!localStorage.getItem("token")
   );
 
-  // Listen for token changes in localStorage
   useEffect(() => {
     const checkAuth = () => {
       setIsAuthenticated(!!localStorage.getItem("token"));
@@ -40,8 +39,14 @@ function App() {
         />
 
         {/* Public routes */}
-        <Route path="/login" element={<Login onAuth={() => setIsAuthenticated(true)} />} />
-        <Route path="/register" element={<Register onAuth={() => setIsAuthenticated(true)} />} />
+        <Route
+          path="/login"
+          element={<Login onAuth={() => setIsAuthenticated(true)} />}
+        />
+        <Route
+          path="/register"
+          element={<Register onAuth={() => setIsAuthenticated(true)} />}
+        />
 
         {/* Protected routes */}
         {isAuthenticated && (

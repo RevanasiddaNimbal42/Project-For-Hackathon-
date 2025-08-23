@@ -1,8 +1,6 @@
 const Comment = require("../modules/Comment");
 const Artwork = require("../modules/Artwork");
 
-// @desc    Add comment to an artwork
-// @route   POST /api/comments/:artworkId
 exports.addComment = async (req, res) => {
   try {
     const { text } = req.body;
@@ -19,7 +17,7 @@ exports.addComment = async (req, res) => {
 
     const comment = await Comment.create({
       text,
-      user: req.user._id, // from auth middleware
+      user: req.user._id,
       artwork: artworkId,
     });
 
@@ -31,14 +29,12 @@ exports.addComment = async (req, res) => {
   }
 };
 
-// @desc    Get all comments for an artwork
-// @route   GET /api/comments/:artworkId
 exports.getCommentsByArtwork = async (req, res) => {
   try {
     const { artworkId } = req.params;
 
     const comments = await Comment.find({ artwork: artworkId })
-      .populate("user", "username email") // show commenter info
+      .populate("user", "username email")
       .sort({ createdAt: -1 });
 
     res.json(comments);
@@ -49,8 +45,6 @@ exports.getCommentsByArtwork = async (req, res) => {
   }
 };
 
-// @desc    Delete a comment
-// @route   DELETE /api/comments/:commentId
 exports.deleteComment = async (req, res) => {
   try {
     const { commentId } = req.params;
@@ -60,7 +54,6 @@ exports.deleteComment = async (req, res) => {
       return res.status(404).json({ message: "Comment not found" });
     }
 
-    // Ensure only the comment owner can delete
     if (comment.user.toString() !== req.user._id.toString()) {
       return res
         .status(403)

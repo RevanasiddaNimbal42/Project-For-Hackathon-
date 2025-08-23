@@ -1,4 +1,3 @@
-// src/pages/ArtworkDetails.jsx
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "../api/api";
@@ -22,7 +21,9 @@ const ArtworkDetails = () => {
   if (!artwork) return <p>Loading artwork...</p>;
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div
+      style={{ padding: "20px", justifyContent: "center", textAlign: "center" }}
+    >
       <h1>{artwork.title}</h1>
       <img
         src={artwork.imageUrl}
