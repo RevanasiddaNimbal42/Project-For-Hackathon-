@@ -1,4 +1,4 @@
-const Comment = require("../modules/");
+const Comment = require("../modules/Comment");
 const Artwork = require("../modules/Artwork");
 
 // @desc    Add comment to an artwork
@@ -25,7 +25,9 @@ exports.addComment = async (req, res) => {
 
     res.status(201).json(comment);
   } catch (err) {
-    res.status(500).json({ message: "Error adding comment", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error adding comment", error: err.message });
   }
 };
 
@@ -41,7 +43,9 @@ exports.getCommentsByArtwork = async (req, res) => {
 
     res.json(comments);
   } catch (err) {
-    res.status(500).json({ message: "Error fetching comments", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error fetching comments", error: err.message });
   }
 };
 
@@ -58,12 +62,16 @@ exports.deleteComment = async (req, res) => {
 
     // Ensure only the comment owner can delete
     if (comment.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Not authorized to delete this comment" });
+      return res
+        .status(403)
+        .json({ message: "Not authorized to delete this comment" });
     }
 
     await comment.deleteOne();
     res.json({ message: "Comment deleted successfully" });
   } catch (err) {
-    res.status(500).json({ message: "Error deleting comment", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error deleting comment", error: err.message });
   }
 };
