@@ -21,7 +21,6 @@ const Artworks = () => {
           "Error fetching artworks:",
           err.response?.data || err.message
         );
-        console.error("Error fetching artworks:", err);
       }
     };
     fetchArtworks();
@@ -64,19 +63,6 @@ const Artworks = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexWrap: "wrap",
-        gap: "20px",
-        padding: "20px",
-      }}
-    >
-      {artworks.length > 0 ? (
-        artworks.map((art) => <ArtworkCard key={art._id} artwork={art} />)
-      ) : (
-        <p>No artworks found</p>
-      )}
     <div style={{ padding: "20px" }}>
       {/* Upload Form */}
       <form
@@ -113,16 +99,12 @@ const Artworks = () => {
       </form>
 
       {/* Artwork List */}
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px",
-        }}
-      >
-        {artworks.map((art) => (
-          <ArtworkCard key={art._id} artwork={art} />
-        ))}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+        {artworks.length > 0 ? (
+          artworks.map((art) => <ArtworkCard key={art._id} artwork={art} />)
+        ) : (
+          <p>No artworks found</p>
+        )}
       </div>
     </div>
   );
