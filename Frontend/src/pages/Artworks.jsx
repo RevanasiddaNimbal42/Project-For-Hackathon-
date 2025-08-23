@@ -11,12 +11,14 @@ const Artworks = () => {
   useEffect(() => {
     const fetchArtworks = async () => {
       try {
-        const res = await axios.get(`/artworks${query ? `?q=${query}` : ""}`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-        });
-        setArtworks(res.data.items || res.data);
+        const res = await axios.get(`/artworks${query ? `?q=${query}` : ""}`);
+        console.log("API response:", res.data);
+        setArtworks(res.data.artworks || res.data.items || res.data);
       } catch (err) {
-        console.error(err);
+        console.error(
+          "Error fetching artworks:",
+          err.response?.data || err.message
+        );
       }
     };
     fetchArtworks();
@@ -31,9 +33,11 @@ const Artworks = () => {
         padding: "20px",
       }}
     >
-      {artworks.map((art) => (
-        <ArtworkCard key={art._id} artwork={art} />
-      ))}
+      {artworks.length > 0 ? (
+        artworks.map((art) => <ArtworkCard key={art._id} artwork={art} />)
+      ) : (
+        <p>No artworks found</p>
+      )}
     </div>
   );
 };

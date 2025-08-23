@@ -13,12 +13,6 @@ const {
 
 const router = express.Router();
 
-/**
- * Multer configuration
- * - Stores files in /backend/uploads
- * - Accepts only images
- * - Limits size to ~5MB
- */
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, "..", "uploads"));
@@ -37,12 +31,9 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  limits: { fileSize: 5 * 1024 * 1024 },
 });
 
-/**
- * ROUTES
- */
 router.get("/", getArtworks);
 router.get("/me", protect, getMyArtworks);
 router.get("/:id", getArtworkById);

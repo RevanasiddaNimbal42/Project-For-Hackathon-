@@ -8,7 +8,7 @@ const ArtworkCard = ({ artwork }) => {
   return (
     <div className={styles.card}>
       <img
-        src={`http://localhost:5000${artwork.imageUrl}`}
+        src={`http://localhost:8000/${artwork.imageUrl}`}
         alt={artwork.title}
       />
       <h3>{artwork.title}</h3>
